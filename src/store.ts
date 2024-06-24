@@ -56,23 +56,6 @@ const elevatorSlice = createSlice({
     },
   },
 })
-// const waitOneSec = () =>
-//   new Promise((resolve) => {
-//     setTimeout(resolve, 1000)
-//   })
-
-// export const asyncTimer = createAsyncThunk('elevator/moveTimer', async (payload: IElevator) => {
-//   const { now, to } = payload
-//   const moving = to > 0 && now !== to
-
-//   if (moving) {
-//     await waitOneSec()
-//     const newFloor = now < to ? now + 1 : now - 1
-//     return { ...payload, now: newFloor }
-//   } else {
-//     return payload
-//   }
-// })
 
 export const moveElevatorAsync = createAsyncThunk<void, { index: number; newFloor: number }, { state: { elevator: IState } }>(
   'elevator/moveElevatorAsync',
