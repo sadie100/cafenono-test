@@ -1,4 +1,5 @@
-import { useSelectFloor } from '../hooks'
+import { ELEVATOR_LIMIT } from '../Constants'
+import { useSelectFloor, useSelectedFloors } from '../hooks'
 
 interface IFloorButton {
   floor: number
@@ -18,8 +19,11 @@ const selectedStyle = {
 const FloorButton = (props: IFloorButton) => {
   const { floor, isSelected } = props
   const selectElevator = useSelectFloor()
+  const selectedFloors = useSelectedFloors()
+  const isButtonDisabled = selectedFloors.length === ELEVATOR_LIMIT
+
   return (
-    <div
+    <button
       style={{
         width: '50px',
         height: '50px',
@@ -28,12 +32,15 @@ const FloorButton = (props: IFloorButton) => {
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'pointer',
+        backgroundColor: 'white',
         ...(isSelected ? selectedStyle : idleStyle),
+        ...(isButtonDisabled ? { backgroundColor: 'lightgray', color: 'gray', border: '1px solid gray' } : {}),
       }}
       onClick={() => selectElevator(floor)}
+      disabled={isButtonDisabled}
     >
       {floor}
-    </div>
+    </button>
   )
 }
 
