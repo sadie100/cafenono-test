@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { IElevator } from '../types'
 import { useArriveElevator, useMoveElevator } from '../hooks'
-import { ELEVATOR_SIZE } from '../Constants'
+import { ELEVATOR_HEIGHT } from '../Constants'
 
 const idleStyle = {
   border: '1px solid black',
@@ -34,8 +34,8 @@ const Elevator = (props: IElevator) => {
   return (
     <div
       style={{
-        width: `${ELEVATOR_SIZE}px`,
-        height: `${ELEVATOR_SIZE}px`,
+        width: '50px',
+        height: `${ELEVATOR_HEIGHT}px`,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
