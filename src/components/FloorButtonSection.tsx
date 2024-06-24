@@ -1,7 +1,9 @@
 import FloorButton from './FloorButton'
 import { FLOOR_ARRAY } from '../Constants'
+import { useFloorMap } from '../hooks'
 
 const FloorButtonSection = () => {
+  const floorMap = useFloorMap()
   return (
     <div
       style={{
@@ -10,15 +12,7 @@ const FloorButtonSection = () => {
     >
       <span>호출</span>
       {FLOOR_ARRAY.map((floor) => (
-        <FloorButton
-          key={floor}
-          style={{
-            width: '50px',
-            height: '50px',
-            margin: '5px',
-          }}
-          floor={floor}
-        />
+        <FloorButton key={floor} floor={floor} isSelected={floorMap[floor] !== 0} />
       ))}
     </div>
   )
