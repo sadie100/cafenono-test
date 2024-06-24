@@ -8,6 +8,8 @@ const FloorButtonSection = () => {
     <div
       style={{
         display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
       }}
     >
       <span>호출</span>

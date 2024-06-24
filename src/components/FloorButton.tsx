@@ -27,7 +27,6 @@ const FloorButton = (props: IFloorButton) => {
       style={{
         width: '50px',
         height: '50px',
-        margin: '5px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
