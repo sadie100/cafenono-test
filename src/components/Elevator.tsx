@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { IElevator } from '../types'
 import { useArriveElevator, useMoveElevator } from '../hooks'
 import { ELEVATOR_HEIGHT } from '../Constants'
@@ -21,11 +21,9 @@ const Elevator = (props: IElevator) => {
   const moving = to > 0 && now !== to
   useEffect(() => {
     if (moving) {
-      const timer = setTimeout(() => {
-        const newFloor = now < to ? now + 1 : now - 1
-        moveElevator(index, newFloor)
-      }, 1000)
-      return () => clearTimeout(timer)
+      const newFloor = now < to ? now + 1 : now - 1
+
+      moveElevator(index, newFloor)
     } else {
       arriveElevator(index, now)
     }

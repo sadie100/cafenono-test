@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { IState } from './types'
-import { store, selectFloor, moveElevator, arriveElevator } from './store'
+import { store, selectFloor, moveElevatorAsync, arriveElevator } from './store'
 
 export const useElevatorState = () => useSelector((state: { elevator: IState }) => state.elevator)
 export const useElevatorDispatch = () => useDispatch<typeof store.dispatch>()
@@ -13,9 +13,10 @@ export const useSelectFloor = () => {
 }
 export const useMoveElevator = () => {
   const dispatch = useDispatch<typeof store.dispatch>()
-  return (index: number, now: number) => dispatch(moveElevator({ index, now }))
+  return (index: number, newFloor: number) => dispatch(moveElevatorAsync({ index, newFloor }))
 }
 export const useArriveElevator = () => {
   const dispatch = useDispatch<typeof store.dispatch>()
   return (index: number, now: number) => dispatch(arriveElevator({ index, now }))
 }
+export const useSelectedFloors = () => useSelector((state: { elevator: IState }) => state.elevator.selectedFloors)

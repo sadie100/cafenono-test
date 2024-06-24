@@ -1,4 +1,4 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { configureStore, createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { FLOOR_ARRAY, ELEVATOR_LIMIT } from './Constants'
 import { IState } from './types'
 
@@ -26,6 +26,7 @@ const elevatorSlice = createSlice({
       const idleElevators = state.elevators.filter((elevator) => elevator.to === 0)
       if (idleElevators.length === 1) {
         state.floorMap[floor] = idleElevators[0].index
+        state.elevators[idleElevators[0].index - 1].to = floor
       }
       if (idleElevators.length > 1) {
         const closestElevator = idleElevators.reduce((acc, cur) => {
@@ -51,9 +52,35 @@ const elevatorSlice = createSlice({
         elevator.to = 0
       }
       state.selectedFloors = state.selectedFloors.filter((floor) => floor !== action.payload.now)
+      state.floorMap[action.payload.now] = 0
     },
   },
 })
+// const waitOneSec = () =>
+//   new Promise((resolve) => {
+//     setTimeout(resolve, 1000)
+//   })
+
+// export const asyncTimer = createAsyncThunk('elevator/moveTimer', async (payload: IElevator) => {
+//   const { now, to } = payload
+//   const moving = to > 0 && now !== to
+
+//   if (moving) {
+//     await waitOneSec()
+//     const newFloor = now < to ? now + 1 : now - 1
+//     return { ...payload, now: newFloor }
+//   } else {
+//     return payload
+//   }
+// })
+
+export const moveElevatorAsync = createAsyncThunk<void, { index: number; newFloor: number }, { state: { elevator: IState } }>(
+  'elevator/moveElevatorAsync',
+  async ({ index, newFloor }: { index: number; newFloor: number }, { dispatch }) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    dispatch(moveElevator({ index: index, now: newFloor }))
+  }
+)
 
 const { actions, reducer } = elevatorSlice
 
